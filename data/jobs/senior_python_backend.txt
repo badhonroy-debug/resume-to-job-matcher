@@ -1,0 +1,37 @@
+Senior Python Backend Engineer
+TechVentures Inc.
+
+About the Role:
+We're looking for a Senior Python Backend Engineer to join our platform team.
+You'll design and build scalable APIs and services that power our core product.
+
+Required Skills:
+- Python (5+ years)
+- PostgreSQL or similar relational database
+- REST API design
+- Docker and containerization
+- AWS cloud services
+- Microservices architecture
+- Git version control
+
+Preferred Skills:
+- Kubernetes
+- Redis or caching solutions
+- CI/CD pipelines
+- Message queues (RabbitMQ, Kafka)
+- Go or second backend language
+- Terraform or infrastructure-as-code
+
+Requirements:
+- Minimum 5 years of professional software engineering experience
+- Bachelor's degree in Computer Science or related field
+- Strong system design skills
+- Experience leading or mentoring other engineers
+
+Responsibilities:
+- Design and implement scalable backend services
+- Lead technical design reviews
+- Mentor junior team members
+- Collaborate with frontend and data teams
+- Participate in on-call rotation
+- Write technical documentation

@@ -1,0 +1,11 @@
+anthropic
+instructor
+pydantic>=2.0
+python-dotenv
+typer
+rich
+fastapi
+uvicorn[standard]
+python-multipart
+jinja2
+pytest

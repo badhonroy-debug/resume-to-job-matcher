@@ -1,0 +1,32 @@
+Alex Rivera
+arivera@gmail.com
+Phone: 555.987.6543
+
+About Me:
+Recent bootcamp grad excited to start my career in frontend development!
+Built several personal projects and completed a 12-week intensive program.
+
+Technical Skills:
+  - Languages: JavaScript, HTML, CSS, a little TypeScript
+  - Frameworks: React, Next.js
+  - Tools: Git, VS Code, Figma, npm
+  - Other: Responsive Design, REST APIs
+
+Work Experience:
+
+Frontend Intern — WebAgency Co.  (Jun 2024 - Aug 2024)
+  * Built responsive landing pages for 3 client projects
+  * Collaborated with designers to implement Figma mockups
+  * Fixed cross-browser compatibility issues
+
+Freelance Web Developer (Jan 2024 - May 2024)
+  * Created portfolio websites for local businesses
+  * Implemented contact forms with basic form validation
+
+Barista — Coffee House  (2021-2023)
+  * Customer service, team collaboration, multitasking
+
+Education:
+  CodeCamp Bootcamp - Full Stack Web Development Certificate (2024)
+  Associates Degree, General Studies
+  Community College of Denver, 2021

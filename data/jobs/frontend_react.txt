@@ -1,0 +1,33 @@
+Frontend Developer (React)
+DesignFirst Studios
+
+We need a frontend developer to build beautiful, performant web applications
+using React and modern web technologies.
+
+Required Skills:
+- JavaScript
+- TypeScript
+- React
+- HTML/CSS
+- Git
+- Responsive Design
+
+Preferred Skills:
+- Next.js
+- Testing (Jest, React Testing Library)
+- State management (Redux, Zustand)
+- Figma
+- GraphQL
+- Performance optimization
+
+Minimum Experience: 2 years in frontend development
+
+Education: Bachelor's degree preferred but not required
+
+Responsibilities:
+- Build and maintain React components and pages
+- Collaborate with UX designers
+- Write unit and integration tests
+- Optimize application performance
+- Participate in code reviews
+- Contribute to component library

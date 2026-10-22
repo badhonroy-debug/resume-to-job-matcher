@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Matcher</title>
+    <link rel="stylesheet" href="/static/style.css?v=2">
+</head>
+<body>
+    <div class="shell">
+
+        <div id="api-warning" class="warning-banner" style="display:none;">
+            API key not configured. Set <code>ANTHROPIC_API_KEY</code> in your <code>.env</code> file and restart the server.
+        </div>
+
+        <header>
+            <div class="logo">RM</div>
+            <div>
+                <h1>Resume Matcher</h1>
+                <p class="subtitle">Parse resumes, extract job descriptions, and score candidate-job matches with AI</p>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab active" data-tab="extract-resume">Extract Resume</button>
+            <button class="tab" data-tab="extract-job">Extract Job</button>
+            <button class="tab" data-tab="match">Match</button>
+            <button class="tab" data-tab="rank">Rank</button>
+        </nav>
+
+        <main>
+            <!-- Extract Resume Tab -->
+            <section id="tab-extract-resume" class="tab-content active">
+                <form id="form-extract-resume" class="form-card">
+                    <h2 class="form-title">Extract Resume</h2>
+                    <p class="form-desc">Upload or paste a resume to extract structured data (skills, experience, education).</p>
+                    <div class="form-body">
+                        <div class="input-group">
+                            <label for="resume-file">Upload resume file</label>
+                            <div class="file-drop" id="drop-resume">
+                                <input type="file" id="resume-file" name="file" accept=".txt,.pdf,.doc,.docx">
+                                <span class="file-drop-label">Choose a file or drag it here</span>
+                            </div>
+                        </div>
+                        <div class="divider"><span>or</span></div>
+                        <div class="input-group">
+                            <label for="resume-text">Paste resume text</label>
+                            <textarea id="resume-text" name="text" rows="12" placeholder="Paste resume text here..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Extract Resume</button>
+                    </div>
+                </form>
+                <div id="result-extract-resume" class="result-area"></div>
+            </section>
+
+            <!-- Extract Job Tab -->
+            <section id="tab-extract-job" class="tab-content">
+                <form id="form-extract-job" class="form-card">
+                    <h2 class="form-title">Extract Job Description</h2>
+                    <p class="form-desc">Upload or paste a job posting to extract required skills, qualifications, and responsibilities.</p>
+                    <div class="form-body">
+                        <div class="input-group">
+                            <label for="job-file">Upload job description file</label>
+                            <div class="file-drop">
+                                <input type="file" id="job-file" name="file" accept=".txt,.pdf,.doc,.docx">
+                                <span class="file-drop-label">Choose a file or drag it here</span>
+                            </div>
+                        </div>
+                        <div class="divider"><span>or</span></div>
+                        <div class="input-group">
+                            <label for="job-text">Paste job description text</label>
+                            <textarea id="job-text" name="text" rows="12" placeholder="Paste job description here..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Extract Job</button>
+                    </div>
+                </form>
+                <div id="result-extract-job" class="result-area"></div>
+            </section>
+
+            <!-- Match Tab -->
+            <section id="tab-match" class="tab-content">
+                <form id="form-match" class="form-card">
+                    <h2 class="form-title">Match Candidate to Job</h2>
+                    <p class="form-desc">Provide a resume and a job description to get an AI-powered match score with detailed breakdown.</p>
+                    <div class="form-body">
+                        <div class="two-col">
+                            <div class="col bordered-col">
+                                <h3>Resume</h3>
+                                <div class="input-group">
+                                    <label for="match-resume-file">Upload resume file</label>
+                                    <div class="file-drop">
+                                        <input type="file" id="match-resume-file" name="resume_file" accept=".txt,.pdf,.doc,.docx">
+                                        <span class="file-drop-label">Choose a file or drag it here</span>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="match-resume-text">Or paste resume text</label>
+                                    <textarea id="match-resume-text" name="resume_text" rows="10" placeholder="Paste resume text..."></textarea>
+                                </div>
+                            </div>
+                            <div class="col bordered-col">
+                                <h3>Job Description</h3>
+                                <div class="input-group">
+                                    <label for="match-job-file">Upload job description file</label>
+                                    <div class="file-drop">
+                                        <input type="file" id="match-job-file" name="job_file" accept=".txt,.pdf,.doc,.docx">
+                                        <span class="file-drop-label">Choose a file or drag it here</span>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="match-job-text">Or paste job description text</label>
+                                    <textarea id="match-job-text" name="job_text" rows="10" placeholder="Paste job description..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Match</button>
+                    </div>
+                </form>
+                <div id="result-match" class="result-area"></div>
+            </section>
+
+            <!-- Rank Tab -->
+            <section id="tab-rank" class="tab-content">
+                <form id="form-rank" class="form-card">
+                    <h2 class="form-title">Rank Candidates</h2>
+                    <p class="form-desc">Upload multiple resumes and a job description to rank all candidates by match score.</p>
+                    <div class="form-body">
+                        <div class="two-col">
+                            <div class="col bordered-col">
+                                <h3>Resumes</h3>
+                                <div class="input-group">
+                                    <label for="rank-resume-files">Upload resume files (select multiple)</label>
+                                    <div class="file-drop">
+                                        <input type="file" id="rank-resume-files" name="resume_files" accept=".txt,.pdf,.doc,.docx" multiple>
+                                        <span class="file-drop-label">Choose files or drag them here</span>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="rank-resume-texts">Or paste resumes (separate with <code>---</code>)</label>
+                                    <textarea id="rank-resume-texts" name="resume_texts" rows="10" placeholder="Paste first resume...&#10;---&#10;Paste second resume...&#10;---&#10;Paste third resume..."></textarea>
+                                </div>
+                            </div>
+                            <div class="col bordered-col">
+                                <h3>Job Description</h3>
+                                <div class="input-group">
+                                    <label for="rank-job-file">Upload job description file</label>
+                                    <div class="file-drop">
+                                        <input type="file" id="rank-job-file" name="job_file" accept=".txt,.pdf,.doc,.docx">
+                                        <span class="file-drop-label">Choose a file or drag it here</span>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="rank-job-text">Or paste job description text</label>
+                                    <textarea id="rank-job-text" name="job_text" rows="10" placeholder="Paste job description..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Rank Candidates</button>
+                    </div>
+                </form>
+                <div id="result-rank" class="result-area"></div>
+            </section>
+        </main>
+
+        <footer>
+            Resume Matcher &middot; Powered by Claude AI &middot; <a href="/docs" target="_blank">API Docs</a>
+        </footer>
+    </div>
+
+    <script src="/static/app.js?v=2"></script>
+</body>
+</html>

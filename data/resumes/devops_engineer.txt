@@ -1,0 +1,35 @@
+Marcus Johnson
+marcus.j@techmail.io // (555) 444-0000
+
+== DevOps / Platform Engineer ==
+
+5 years automating infrastructure and CI/CD pipelines.
+Believe in "everything as code" and GitOps workflows.
+
+--- Skills ---
+Terraform, Ansible, Docker, k8s, Helm, AWS (ECS, EKS, CloudFormation, IAM),
+GCP (GKE, Cloud Run), Linux, Bash, Python, Go, Jenkins, GitHub Actions,
+ArgoCD, Prometheus, Grafana, Datadog, Nginx, PostgreSQL, MongoDB
+
+--- Experience ---
+
+Platform Engineer @ CloudScale Inc (Mar 2022 - present)
+  > Designed and managed k8s clusters serving 50+ microservices
+  > Implemented GitOps workflow with ArgoCD reducing deployment time by 60%
+  > Built custom Terraform modules for multi-region AWS infrastructure
+  > On-call rotation, incident response, post-mortems
+
+DevOps Engineer @ MidSizeStartup (Jan 2020 - Feb 2022)
+  > Migrated legacy Jenkins pipelines to GitHub Actions
+  > Containerized 20+ services with Docker
+  > Set up monitoring stack (Prometheus + Grafana)
+  > Reduced cloud costs by 30% through right-sizing and spot instances
+
+Jr. Systems Admin @ OldSchool Corp (Jun 2019 - Dec 2019)
+  > Managed Linux servers and networking
+  > Wrote Bash automation scripts
+  > Handled user access and security patching
+
+--- Education ---
+B.S. Information Technology
+Tech State University, 2019

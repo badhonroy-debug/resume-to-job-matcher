@@ -1,0 +1,37 @@
+Dr. Priya Sharma
+p.sharma@research.edu | +1 (555) 777-8888
+
+PROFILE
+Machine learning engineer and researcher with expertise in NLP and deep learning.
+Published 4 papers in top-tier conferences. Passionate about applying ML to
+real-world problems at scale.
+
+SKILLS
+Python, PyTorch, TensorFlow, scikit-learn, Hugging Face Transformers,
+NumPy, Pandas, SQL, Docker, AWS (SageMaker, S3, EC2), MLflow,
+Weights & Biases, Git, Linux, Java, Spark, Airflow,
+NLP, Computer Vision, Statistical Modeling, A/B Testing,
+LLMs, RAG, Fine-tuning, Data Engineering
+
+EXPERIENCE
+
+ML Engineer — AI Solutions Corp (Sep 2022 - Present)
+  - Deployed production NLP models serving 1M+ predictions/day
+  - Built RAG pipeline for enterprise knowledge base, improving answer accuracy by 35%
+  - Designed A/B testing framework for model evaluation
+  - Reduced model inference latency by 50% using quantization and batching
+
+Research Assistant — University ML Lab (2019 - 2022)
+  - Published papers on transformer architectures and few-shot learning
+  - Implemented novel attention mechanisms in PyTorch
+  - Mentored 3 undergraduate researchers
+
+Data Science Intern — BigDataCo (Summer 2019)
+  - Built churn prediction model improving retention by 15%
+  - Created automated data pipelines with Airflow and Spark
+
+EDUCATION
+Ph.D. Computer Science (Machine Learning) — MIT, 2022
+  Thesis: "Efficient Attention Mechanisms for Long-Document Understanding"
+M.S. Computer Science — MIT, 2020
+B.Tech Computer Engineering — IIT Delhi, 2018

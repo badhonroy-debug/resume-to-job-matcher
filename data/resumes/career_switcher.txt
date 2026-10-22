@@ -1,0 +1,35 @@
+JORDAN PATEL
+jordan.patel@protonmail.com | 555-222-3333
+
+Professional Summary
+Former high school math teacher transitioning into software engineering.
+Completed MS in CS while teaching. Strong analytical and communication skills.
+Self-taught Python programmer with growing experience in web development.
+
+TECHNICAL SKILLS
+Python, Django, Flask, JavaScript, React (basic), SQL, Git,
+HTML/CSS, Linux, Problem Solving, Communication, Teaching
+
+PROFESSIONAL EXPERIENCE
+
+Math Teacher | Lincoln High School
+Aug 2017 - Jun 2024
+- Taught algebra, calculus, and statistics to 150+ students annually
+- Developed custom Python scripts to automate grade calculations
+- Created interactive data visualization projects for students
+- Led after-school coding club
+
+Software Engineering Intern | LocalTech Solutions
+Jun 2023 - Aug 2023
+- Built internal dashboard using Django and PostgreSQL
+- Wrote unit tests with pytest, achieving 85% coverage
+- Participated in code reviews and daily standups
+
+Open Source Contributions (2022-present)
+- Contributed bug fixes to Django documentation
+- Built a student grade management CLI tool (Python)
+
+EDUCATION
+M.S. Computer Science — State University, 2024
+  GPA: 3.8
+B.A. Mathematics — State University, 2017

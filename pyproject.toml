@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "resume-matcher"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "anthropic",
+    "instructor",
+    "pydantic>=2.0",
+    "python-dotenv",
+    "typer",
+    "rich",
+    "fastapi",
+    "uvicorn[standard]",
+    "python-multipart",
+    "jinja2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx"]
+
+[project.scripts]
+resume-matcher = "resume_matcher.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

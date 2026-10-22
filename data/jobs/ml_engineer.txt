@@ -1,0 +1,34 @@
+Machine Learning Engineer
+DataMind AI
+
+Join our ML team to build and deploy production machine learning systems.
+
+Required Skills:
+- Python
+- PyTorch or TensorFlow
+- scikit-learn
+- SQL
+- Docker
+- AWS or GCP cloud platform
+- Git
+
+Preferred Skills:
+- Hugging Face Transformers
+- MLflow or experiment tracking tools
+- Spark or distributed computing
+- Kubernetes
+- LLMs and RAG systems
+- A/B Testing
+
+Minimum Experience: 3 years in ML or related field
+
+Education: Master's degree or PhD in Computer Science, Machine Learning,
+Statistics, or related quantitative field
+
+Responsibilities:
+- Design, train, and deploy ML models to production
+- Build and maintain ML pipelines
+- Collaborate with product and engineering teams
+- Conduct experiments and A/B tests
+- Monitor model performance and retrain as needed
+- Stay current with ML research

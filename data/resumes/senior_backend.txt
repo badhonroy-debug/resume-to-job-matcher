@@ -1,0 +1,36 @@
+SARAH CHEN
+sarah.chen@email.com | (555) 123-4567
+
+SUMMARY
+Senior backend engineer with 8+ years building scalable distributed systems.
+Passionate about clean architecture and high-performance APIs.
+
+SKILLS
+Python, Go, Java, PostgreSQL, Redis, Docker, Kubernetes (k8s),
+AWS (EC2, S3, Lambda, RDS), REST APIs, gRPC, CI/CD, Git,
+Microservices, System Design, SQL, Celery, RabbitMQ, Terraform
+
+EXPERIENCE
+
+Senior Software Engineer | TechCorp Inc.
+Jan 2021 - Present
+- Led migration of monolith to microservices architecture serving 2M+ requests/day
+- Designed and implemented event-driven payment processing pipeline
+- Reduced API latency by 40% through caching strategies and query optimization
+- Mentored team of 4 junior engineers
+
+Software Engineer | DataFlow Systems
+Mar 2018 - Dec 2020
+- Built real-time data ingestion pipeline processing 500K events/hour
+- Implemented automated testing suite achieving 92% code coverage
+- Designed RESTful APIs consumed by 3 frontend teams
+
+Junior Developer | StartupXYZ
+Jun 2016 - Feb 2018
+- Developed internal tools using Python and Flask
+- Managed PostgreSQL databases and wrote complex SQL queries
+- Participated in agile development processes
+
+EDUCATION
+Bachelor of Science in Computer Science
+University of California, Berkeley — 2016

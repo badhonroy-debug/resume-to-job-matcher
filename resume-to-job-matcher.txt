@@ -1,0 +1,142 @@
+# Project: Resume-to-Job Matcher & Schema Extractor
+
+## Goal
+Build a Python CLI application that:
+1. Parses plain-text resumes (CVs) into a structured, validated schema (skills, experience, education).
+2. Parses plain-text job descriptions into a structured schema (required skills, preferred skills, minimum experience, education requirements).
+3. Scores each resume against a job description and produces a structured match report with a score, a breakdown, and a short explanation.
+
+This is a learning project (Week 1 of an Applied AI Engineering curriculum: structured outputs, Pydantic, and validation/retry logic), so keep the code clean, readable, and well-commented rather than over-engineered.
+
+## Tech stack
+- Python 3.11+
+- `anthropic` (official SDK) for calling Claude
+- `instructor` for structured outputs: use `instructor.from_anthropic(...)` with `response_model=` and `max_retries=`
+- `pydantic` v2 for all schemas
+- `python-dotenv` to load the API key from `.env`
+- `typer` for the CLI, `rich` for pretty terminal output
+- `pytest` for tests
+
+## API key setup (IMPORTANT)
+- I do not have the real API key yet. Use a dummy placeholder.
+- Create `.env.example` AND `.env`, both containing:
+```
+  ANTHROPIC_API_KEY=sk-ant-dummy-key-replace-me
+  CLAUDE_MODEL=claude-haiku-5-5
+```
+- Add `.env` to `.gitignore`. Never hardcode the key anywhere in the source code.
+- In `config.py`, load the key with python-dotenv. If the key is missing or still equals the dummy value, raise a clear, friendly error such as: "Please set your real ANTHROPIC_API_KEY in the .env file." Do NOT let it fail with a confusing stack trace.
+- The model name must come from `CLAUDE_MODEL` in `.env` (default `claude-haiku-5-5`), so I can switch to `claude-sonnet-5-5` later without code changes.
+
+## Project structure
+```
+resume-matcher/
+├── .env.example
+├── .env
+├── .gitignore
+├── README.md
+├── requirements.txt
+├── data/
+│   ├── resumes/          # 6 sample .txt resumes (fake people)
+│   └── jobs/             # 3 sample .txt job descriptions
+├── output/               # generated JSON reports go here
+├── src/resume_matcher/
+│   ├── __init__.py
+│   ├── config.py         # env loading, key validation, model name
+│   ├── schemas.py        # all Pydantic models
+│   ├── llm_client.py     # instructor-wrapped Anthropic client
+│   ├── extractor.py      # resume + job description extraction
+│   ├── scorer.py         # deterministic scoring logic
+│   ├── explainer.py      # LLM-generated explanation of the match
+│   └── cli.py            # typer CLI commands
+└── tests/
+    ├── test_schemas.py
+    ├── test_scorer.py
+    └── test_extractor.py # uses mocks, no real API calls
+```
+
+## Schemas (schemas.py)
+Use Pydantic v2 with `Field(description=...)` on every field, because the descriptions guide Claude's extraction.
+
+**Resume**
+- `full_name: str`
+- `email: str | None`
+- `phone: str | None`
+- `summary: str | None`: 1–2 sentence professional summary
+- `skills: list[Skill]`, where `Skill` has `name: str` (canonical form, e.g. "JavaScript", not "JS") and `category: Literal["programming_language", "framework", "tool", "cloud", "database", "soft_skill", "other"]`
+- `experience: list[WorkExperience]`, where `WorkExperience` has `job_title`, `company`, `start_date: str | None`, `end_date: str | None` ("Present" allowed), `duration_months: int | None`, and `highlights: list[str]`
+- `education: list[Education]`, where `Education` has `degree`, `field_of_study: str | None`, `institution`, and `graduation_year: int | None`
+- `total_years_experience: float`: must be >= 0 (add a validator)
+
+**JobDescription**
+- `job_title: str`
+- `company: str | None`
+- `required_skills: list[str]` (canonical names)
+- `preferred_skills: list[str]` (canonical names)
+- `min_years_experience: float | None`
+- `required_education_level: Literal["none", "high_school", "bachelors", "masters", "phd"] | None`
+- `responsibilities: list[str]`
+
+**MatchResult**
+- `candidate_name: str`
+- `job_title: str`
+- `overall_score: float` (0–100)
+- `breakdown: ScoreBreakdown` with `required_skills_score`, `preferred_skills_score`, `experience_score`, `education_score`
+- `matched_required_skills: list[str]`
+- `missing_required_skills: list[str]`
+- `matched_preferred_skills: list[str]`
+- `explanation: str`: 3–5 sentences, written by Claude
+- `recommendation: Literal["strong_match", "possible_match", "weak_match"]`
+
+Add validators where they make sense: scores must be between 0 and 100, years cannot be negative, and graduation_year must be between 1950 and the current year + 6.
+
+## Extraction (extractor.py)
+- `extract_resume(text: str) -> Resume` and `extract_job(text: str) -> JobDescription`.
+- Use instructor with `max_retries=3` so that if Claude's output fails Pydantic validation, the validation error is sent back and Claude retries automatically. This retry-on-validation-failure behavior is a key learning goal, so add a comment explaining how it works.
+- Write a clear system prompt for each extraction. It should tell Claude to:
+  - extract only what is actually in the text and never invent data (use null or empty lists when information is missing),
+  - normalize skill names to canonical forms (e.g. "JS" → "JavaScript", "Postgres" → "PostgreSQL", "k8s" → "Kubernetes") so that matching works without embeddings,
+  - calculate `total_years_experience` from the work history.
+- Use `temperature=0` for consistent extraction.
+- Log how many retries happened, if any.
+
+## Scoring (scorer.py): deterministic, NO LLM
+The score must be computed in plain Python so it is reproducible and testable. Weights:
+- Required skills: **50%** (matched required / total required)
+- Preferred skills: **15%** (matched preferred / total preferred; full marks if none are listed)
+- Experience: **20%** (full marks if total years >= minimum, proportional if below, full marks if no minimum)
+- Education: **15%** (full marks if the highest degree meets or exceeds the required level, using the ordering none < high_school < bachelors < masters < phd)
+
+Skill comparison should be case-insensitive and whitespace-trimmed. Put the weights in a single constants dictionary so they are easy to tweak.
+
+Recommendation thresholds: >= 75 → `strong_match`, 50–74 → `possible_match`, < 50 → `weak_match`.
+
+## Explanation (explainer.py)
+After the deterministic score is calculated, make ONE Claude call that receives the Resume, the JobDescription, and the computed score breakdown, and returns a short, honest explanation (strengths, gaps, and whether the candidate is worth interviewing). Claude must NOT change the score; it only explains it.
+
+## CLI commands (cli.py)
+- `extract-resume <path>`: print the extracted Resume as formatted JSON and save it to `output/`
+- `extract-job <path>`: same for a job description
+- `match <resume_path> <job_path>`: full pipeline; print a rich table with the score breakdown, matched and missing skills, and the explanation; save `MatchResult` JSON to `output/`
+- `rank <resumes_folder> <job_path>`: match every resume in the folder against one job and print a ranked leaderboard table
+
+Handle errors gracefully: file not found, empty file, dummy or missing API key, API errors (rate limit, network), and extraction failure after all retries. Show a short readable message, not a raw traceback.
+
+## Sample data
+Create 6 realistic but entirely FAKE resumes covering a range of profiles: a strong senior backend engineer, a junior frontend developer, a career switcher from data analysis, a DevOps engineer, an ML engineer, and a weak or unrelated candidate. Vary the formatting (some messy, some with abbreviations like "JS" or "k8s") to test normalization. Also create 3 job descriptions: Senior Python Backend Engineer, Frontend React Developer, and Machine Learning Engineer.
+
+## Tests
+- `test_scorer.py`: unit tests for every scoring rule, including edge cases (no required skills, zero experience, no education requirement, perfect match, zero match).
+- `test_schemas.py`: validators reject bad data (negative years, score > 100, etc.).
+- `test_extractor.py`: mock the LLM client so tests run WITHOUT a real API key and cost nothing.
+- All tests must pass with only the dummy key in `.env`.
+
+## README.md
+Include: what the project does, a setup guide (venv, install, adding the real key to `.env`), example commands, how the scoring works, and an explanation of how instructor's validation-retry loop works.
+
+## Working style
+1. First, show me a short plan and the folder structure before writing any code.
+2. Then build it step by step: schemas → config → client → extractor → scorer → explainer → CLI → sample data → tests → README.
+3. Run `pytest` at the end and make sure all tests pass.
+4. Since I only have a dummy key, do not try to run the real `match` command against the API. Just confirm that the friendly "please set your real key" error appears correctly.
+5. Keep functions small, use type hints everywhere, and add docstrings.
